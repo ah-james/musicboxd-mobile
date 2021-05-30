@@ -9,3 +9,5 @@ class Review {
         this.text = text
     }
 }
+
+export default Review
