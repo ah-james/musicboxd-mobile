@@ -1,16 +1,26 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
+
+import REVIEWS from '../data/dummy-data'
 
 const AlbumsOverviewContainer = props => {
     return(
-        <View style={styles.container}>
-            <Text>Albums Overview</Text>
-        </View>
+        <FlatList data={REVIEWS} renderItem={itemData => 
+            <View style={styles.reviewContainer}>
+                <View style={styles.artistInfo} >
+                    <Text>{itemData.item.album} by {itemData.item.artist}</Text>
+                </View>
+            </View>
+        }/>
     )
 }
 
+AlbumsOverviewContainer.navigationOptions = {
+    headerTitle: 'All Reviews'
+}
+
 const styles = StyleSheet.create({
-    container: {
+    reviewContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',

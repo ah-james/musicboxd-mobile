@@ -1,5 +1,5 @@
 class Review {
-    constructor(id, userId, album, imageUrl, rating, text) {
+    constructor(id, userId, album, artist, imageUrl, rating, text) {
         this.id = id,
         this.userId = userId,
         this.album = album,
