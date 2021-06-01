@@ -1,13 +1,17 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 
 import REVIEWS from '../data/dummy-data'
 
 const ReviewContainer = props => {
-    // const selectedReview = REVIEWS.find(review => review.id === props)
+    const reviewId = props.navigation.getParam('id')
+    const selectedReview = REVIEWS.find(review => review.id === reviewId)
     return(
         <View>
-            <Text>Review Show Page</Text>
+            <Image style={styles.image} source={{uri: selectedReview.imageUrl}} />
+            <Text>{selectedReview.album} by {selectedReview.artist}</Text>
+            <Text>{selectedReview.rating}/10</Text>
+            <Text>{selectedReview.text}</Text>
         </View>
     )
 }
@@ -19,7 +23,13 @@ ReviewContainer.navigationOptions = navData => {
 }
 
 const styles = StyleSheet.create({
-
+    image: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '50%',
+        width: '50%',
+        marginTop: 10
+    }
 })
 
 export default ReviewContainer
