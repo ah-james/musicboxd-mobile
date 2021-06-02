@@ -1,8 +1,10 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, Platform } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import REVIEWS from '../data/dummy-data'
 import ReviewCard from '../components/ReviewCard'
+import CustomHeaderButton from '../components/CustomHeaderButton'
 
 const AlbumsOverviewContainer = props => {
 
@@ -29,8 +31,13 @@ const AlbumsOverviewContainer = props => {
     )
 }
 
-AlbumsOverviewContainer.navigationOptions = {
-    headerTitle: 'All Reviews'
+AlbumsOverviewContainer.navigationOptions = navData => {
+    return {
+        headerTitle: 'All Reviews',
+        headerRight: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
+            <Item title='Cart' iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'} onPress={() => {navData.navigation.navigate('User')}} />
+        </HeaderButtons>
+    }
 }
 
 export default AlbumsOverviewContainer
