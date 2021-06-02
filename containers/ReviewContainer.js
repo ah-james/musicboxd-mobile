@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Button } from 'react-native'
 
 import REVIEWS from '../data/dummy-data'
 
@@ -8,10 +8,17 @@ const ReviewContainer = props => {
     const selectedReview = REVIEWS.find(review => review.id === reviewId)
     return(
         <View>
-            <Image style={styles.image} source={{uri: selectedReview.imageUrl}} />
-            <Text>{selectedReview.album} by {selectedReview.artist}</Text>
-            <Text>{selectedReview.rating}/10</Text>
-            <Text>{selectedReview.text}</Text>
+            <View style={styles.imageContainer}>
+                <Image style={styles.image} source={{uri: selectedReview.imageUrl}} />
+            </View>
+            <View style={styles.albumInfo}>
+                <Text>{selectedReview.album} by {selectedReview.artist}</Text>
+                <Text>{selectedReview.rating}/10</Text>
+            </View>
+            <View style={styles.textContainer}>
+                <Text>{selectedReview.text}</Text>
+            </View>
+            <Button title='Edit' accessibilityLabel="Edit Your Album Review" onPress={() => props.navigation.navigate('')} />
         </View>
     )
 }
@@ -23,12 +30,17 @@ ReviewContainer.navigationOptions = navData => {
 }
 
 const styles = StyleSheet.create({
-    image: {
+    imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         height: '50%',
         width: '50%',
-        marginTop: 10
+        margin: 10,
+    },
+    image: {
+        height: '100%',
+        width: '100%',
+        margin: 10
     }
 })
 

@@ -35,7 +35,7 @@ AlbumsOverviewContainer.navigationOptions = navData => {
     return {
         headerTitle: 'All Reviews',
         headerRight: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
-            <Item title='Cart' iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'} onPress={() => {navData.navigation.navigate('User')}} />
+            <Item title='User' iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'} onPress={() => {navData.navigation.navigate('User')}} />
         </HeaderButtons>
     }
 }

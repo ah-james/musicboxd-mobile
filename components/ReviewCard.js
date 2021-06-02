@@ -32,7 +32,7 @@ const ReviewCard = props => {
 
 const styles = StyleSheet.create({
     review: {
-        height: 300,
+        height: 325,
         margin: 10,
     },
     reviewContainer: {
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         overflow: 'hidden',
+        marginTop: 5,
     },
     image: {
         width: 200,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     artistInfo: {
         alignItems: 'center',
         height: '13%',
-        padding: 5,
+        // padding: 5,
     },
     score: {
         textAlign: 'center',
