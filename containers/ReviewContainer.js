@@ -1,11 +1,21 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, Button } from 'react-native'
+import { View, Text, StyleSheet, Image, Button, Platform } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import REVIEWS from '../data/dummy-data'
+import CustomHeaderButton from '../components/CustomHeaderButton'
 
 const ReviewContainer = props => {
     const reviewId = props.navigation.getParam('id')
     const selectedReview = REVIEWS.find(review => review.id === reviewId)
+
+    handleEditReview = (id, album) => {
+        props.navigation.navigate({routeName: 'EditReview', params: {
+            id: id,
+            album: album
+        }})
+    }
+
     return(
         <View>
             <View style={styles.imageContainer}>
@@ -18,14 +28,17 @@ const ReviewContainer = props => {
             <View style={styles.textContainer}>
                 <Text>{selectedReview.text}</Text>
             </View>
-            <Button title='Edit' accessibilityLabel="Edit Your Album Review" onPress={() => props.navigation.navigate('')} />
+            <Button title='Edit' accessibilityLabel="Edit Your Album Review" onPress={() => handleEditReview(selectedReview.id, selectedReview.album)} />
         </View>
     )
 }
 
 ReviewContainer.navigationOptions = navData => {
     return {
-        headerTitle: navData.navigation.getParam('album')
+        headerTitle: navData.navigation.getParam('album'),
+        headerRight: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
+            <Item title='User' iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'} onPress={() => {navData.navigation.navigate('User')}} />
+        </HeaderButtons>
     }
 }
 
