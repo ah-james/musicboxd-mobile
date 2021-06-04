@@ -1,7 +1,39 @@
 import Review from '../../models/review'
 
-const SET_REVIEWS = 'SET_REVIEWS'
+export const SET_REVIEWS = 'SET_REVIEWS'
+export const DELETE_REVIEW = 'DELETE_REVIEW'
+export const CREATE_REVIEW = 'CREATE_REVIEW'
 
-// export const fetchReviews = () => {
-//     dispatchEvent({type: SET_REVIEWS, reviews: })
-// }
+export const fetchReviews = () => {
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId
+        try {
+            const response = await fetch('https://musicboxd-mobile-default-rtdb.firebaseio.com/reviews.json')
+            if (!response.ok) {
+                throw new Error('Something went wrong!')
+            }
+
+            const responseData = await response.json()
+            const loadedReviews = []
+
+            for (key in responseData) {
+                loadedReviews.push(new loadedReviews(
+                    key,
+                    responseData[key].userId,
+                    responseData[key].album,
+                    responseData[key].artist,
+                    responseData[key].imageUrl,
+                    responseData[key].rating,
+                    responseData[key].text
+                ))
+            }
+            dispatch({
+                type: SET_REVIEWS, 
+                reviews: loadedReviews, 
+                userReviews: loadedReviews.filter(review => review.userId === userId)
+            })
+        } catch (error) {
+            throw error
+        }
+    }
+}
