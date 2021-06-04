@@ -55,3 +55,36 @@ export const deleteReview = reviewId => {
         })
     }
 }
+
+export const createReview = (album, artist, imageUrl, rating, text) => {
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId
+        const token = getState().auth.token
+        const response = await fetch(`https://rn-shopping-app-5e413-default-rtdb.firebaseio.com/reviews.json?auth=${token}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                album,
+                artist,
+                imageUrl,
+                rating,
+                text,
+                userId: userId
+            })
+        })
+
+        const responseData = await response.json()
+
+        dispatch({ type: CREATE_REVIEW, reviewData: {
+            id: responseData.name,
+            album,
+            artist,
+            imageUrl,
+            rating,
+            text,
+            userId: userId
+        }})
+    }
+}
