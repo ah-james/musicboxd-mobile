@@ -67,7 +67,10 @@ const EditReviewContainer = props => {
 
 EditReviewContainer.navigationOptions = navData => {
     return {
-        headerTitle: navData.navigation.getParam('id') ? `Edit Your ${navData.navigation.getParam('album')} Review` : 'Add a New Review'
+        headerTitle: navData.navigation.getParam('id') ? `Edit Your ${navData.navigation.getParam('album')} Review` : 'Add a New Review',
+        headerRight: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
+        <Item title='Submit' iconName={Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'} onPress={() => {handleSubmit}} />
+    </HeaderButtons>
     }
 }
 
