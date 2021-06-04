@@ -3,6 +3,7 @@ import Review from '../../models/review'
 export const SET_REVIEWS = 'SET_REVIEWS'
 export const DELETE_REVIEW = 'DELETE_REVIEW'
 export const CREATE_REVIEW = 'CREATE_REVIEW'
+export const UPDATE_REVIEW = 'UPDATE_REVIEW'
 
 export const fetchReviews = () => {
     return async (dispatch, getState) => {
@@ -17,7 +18,7 @@ export const fetchReviews = () => {
             const loadedReviews = []
 
             for (key in responseData) {
-                loadedReviews.push(new loadedReviews(
+                loadedReviews.push(new Review(
                     key,
                     responseData[key].userId,
                     responseData[key].album,
@@ -85,6 +86,37 @@ export const createReview = (album, artist, imageUrl, rating, text) => {
             rating,
             text,
             userId: userId
+        }})
+    }
+}
+
+export const updateReview = (id, album, artist, imageUrl, rating, text) => {
+    return async (dispatch, getState) => {
+        const token = getState().auth.token
+        const response = await fetch(`https://rn-shopping-app-5e413-default-rtdb.firebaseio.com/products${id}.json?auth=${token}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                album,
+                artist,
+                imageUrl,
+                rating,
+                text
+            })
+        })
+
+        if (!response.ok) {
+            throw new Error('Something Went Wrong!')
+        }
+
+        dispatch({ type: UPDATE_REVIEW, reviewId: id, reviewData: {
+            album,
+            artist,
+            imageUrl,
+            rating,
+            text
         }})
     }
 }
