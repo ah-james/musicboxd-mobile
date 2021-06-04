@@ -34,8 +34,11 @@ const AlbumsOverviewContainer = props => {
 AlbumsOverviewContainer.navigationOptions = navData => {
     return {
         headerTitle: 'All Reviews',
-        headerRight: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
+        headerLeft: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
             <Item title='User' iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'} onPress={() => {navData.navigation.navigate('User')}} />
+        </HeaderButtons>,
+        headerRight: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
+            <Item title='Add' iconName={Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'} onPress={() => {navData.navigation.navigate('EditReview')}} />
         </HeaderButtons>
     }
 }
