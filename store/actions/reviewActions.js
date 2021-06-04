@@ -37,3 +37,21 @@ export const fetchReviews = () => {
         }
     }
 }
+
+export const deleteReview = reviewId => {
+    return async (dispatch, getState) => {
+        const token = getState().auth.token
+        const response = await fetch(`https://musicboxd-mobile-default-rtdb.firebaseio.com/reviews${reviewId}.json?auth=${token}`, {
+            method: 'DELETE',
+        })
+
+        if (!response.ok) {
+            throw new Error('Something Went Wrong!')
+        }
+
+        dispatch({
+            type: DELETE_REVIEW, 
+            reviewId: reviewId
+        })
+    }
+}
