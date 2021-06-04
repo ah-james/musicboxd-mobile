@@ -38,5 +38,29 @@ export default (state = initialState, action) => {
                 availableReviews: state.availableReviews.concat(newReview),
                 userReviews: state.availableReviews.concat(newReview),
             }
+        case UPDATE_REVIEW:
+            const reviewIndex = state.userReviews.findIndex(review => review.id === action.reviewId)
+            const updatedReview = new Review(
+                action.reviewId,
+                state.userReviews[reviewIndex].ownerId,
+                action.reviewData.album,
+                action.reviewData.artist,
+                action.reviewData.album,
+                action.reviewData.imageUrl,
+                action.reviewData.rating,
+                action.reviewData.text
+            )
+            const updatedUserReviews = [...state.userReviews]
+            updatedUserReviews[reviewIndex] = updatedReview
+            const availableReviewIndex = state.availableReviews.findIndex(review => review.id === action.reviewId)
+            const updatedAvailableReviews = [...state.availableReviews]
+            updatedAvailableReviews[availableReviewIndex] = updatedReview
+            return {
+                ...state,
+                availableReviews: updatedAvailableReviews,
+                userReviews: updatedUserReviews
+            }
+        
     }
+    return state
 }
