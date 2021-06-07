@@ -1,9 +1,10 @@
 import REVIEWS from '../../data/dummy-data'
 import Review from '../../models/review'
+import { SET_REVIEWS, DELETE_REVIEW, CREATE_REVIEW, UPDATE_REVIEW } from '../actions/reviewActions'
 
 const initialState = {
-    availableReviews = [],
-    userReviews = []
+    availableReviews: [],
+    userReviews: []
 }
 
 export default (state = initialState, action) => {
