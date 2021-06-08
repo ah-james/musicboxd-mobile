@@ -53,6 +53,16 @@ const Input = props => {
         dispatch({type: INPUT_BLUR})
     }
 
+    const handleTextChange = text => {
+        // initially set isValid to true
+        let isValid = true
+        // if required is passed down and no text is passed in then not valid
+        if (props.required && text.length === 0) {
+            isValid = false
+        }
+        dispatch({type: INPUT_CHANGE, value: text, isValid: isValid})
+    }
+
     return(
         <View style={styles.inputContainer}>
             <Text style={styles.label}>{props.label}</Text>
