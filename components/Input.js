@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 
 const INPUT_CHANGE = 'INPUT_CHANGE'
@@ -23,18 +23,16 @@ const inputReducer = (state, action) => {
     }
 }
 
-const initialState = {
-    // inputState.value returns prop filler text depending on if edit
-    value: props.initialValue ? props.initialValue : '',
-    // isValid checks if input field is valid
-    isValid: props.initiallyValid,
-    // checks if text field has been touched
-    touched: false
-}
-
 const Input = props => {
     // useReducer because state is complex
-    const [inputState, dispatch] = useReducer(inputReducer, initialState)
+    const [inputState, dispatch] = useReducer(inputReducer, {
+        // inputState.value returns prop filler text depending on if edit
+        value: props.initialValue ? props.initialValue : '',
+        // isValid checks if input field is valid
+        isValid: props.initiallyValid,
+        // checks if text field has been touched
+        touched: false
+    })
 
     // use onInputChange and id without calling props
     const { onInputChange, id } = props
@@ -67,7 +65,7 @@ const Input = props => {
         <View style={styles.inputContainer}>
             <Text style={styles.label}>{props.label}</Text>
             <TextInput {...props} style={styles.input} value={inputState.value} onChangeText={handleTextChange} onBlur={handleLostFocus} />
-            {!initialState.isValid && initialState.touched && 
+            {!inputState.isValid && inputState.touched && 
                 <View style={styles.errorContainer}>
                     <Text style={styles.errorText}>{props.errorText}</Text>
                 </View>
