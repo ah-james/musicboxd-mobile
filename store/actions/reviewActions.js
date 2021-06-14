@@ -61,7 +61,7 @@ export const createReview = (album, artist, imageUrl, rating, text) => {
     return async (dispatch, getState) => {
         const userId = getState().auth.userId
         const token = getState().auth.token
-        const response = await fetch(`https://rn-shopping-app-5e413-default-rtdb.firebaseio.com/reviews.json?auth=${token}`, {
+        const response = await fetch(`https://musicboxd-mobile-default-rtdb.firebaseio.com/reviews.json?auth=${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -72,6 +72,7 @@ export const createReview = (album, artist, imageUrl, rating, text) => {
                 imageUrl,
                 rating,
                 text,
+                // userId: const userId
                 userId: userId
             })
         })
@@ -85,6 +86,7 @@ export const createReview = (album, artist, imageUrl, rating, text) => {
             imageUrl,
             rating,
             text,
+            // userId: const userId
             userId: userId
         }})
     }
@@ -92,8 +94,9 @@ export const createReview = (album, artist, imageUrl, rating, text) => {
 
 export const updateReview = (id, album, artist, imageUrl, rating, text) => {
     return async (dispatch, getState) => {
+        // use getState to acquire token from redux store
         const token = getState().auth.token
-        const response = await fetch(`https://rn-shopping-app-5e413-default-rtdb.firebaseio.com/products${id}.json?auth=${token}`, {
+        const response = await fetch(`https://musicboxd-mobile-default-rtdb.firebaseio.com/products${id}.json?auth=${token}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
