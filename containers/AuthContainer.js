@@ -1,5 +1,5 @@
-import React, { useReducer, useCallback } from 'react'
-import { View, Text, StyleSheet, ScrollView, Button } from 'react-native'
+import React, { useReducer, useCallback, useState, useEffect } from 'react'
+import { View, Text, StyleSheet, ScrollView, Button, ActivityIndicator, Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import Input from '../components/Input'
@@ -37,6 +37,13 @@ const reducer = (state, action) => {
 }
 
 const AuthContainer = props => {
+    // error state to show errors on page
+    const [error, setError] = useState()
+    // isLoading state to show spinning wheel when form is loading
+    const [isLoading, setIsLoading] = useState(false)
+    // signup state to determine login vs signup button
+    const [isSignup, setIsSignup] = useState(false)
+    // reducer to manage complex user signup state
     const [formState, dispatchState] = useReducer(reducer, {
         inputValues: {
             email: '',
@@ -51,9 +58,32 @@ const AuthContainer = props => {
 
     const dispatch = useDispatch()
 
-    const handleSignup = () => {
-        // dispatch user email and password to authActions in store
-        dispatch(authActions.signup(formState.inputValues.email, formState.inputValues.password))
+    useEffect(() => {
+        // if error exists, create an alert with Alert api
+        if (error) {
+            Alert.alert('An Error Occurred', error, [{ text: 'Okay' }])
+        }
+    }, [error])
+
+    // use async await bc authActions return promises
+    const handleAuth = async () => {
+        let action
+        if (isSignup) {
+            // email and password to authActions.signup in store
+            action = authActions.signup(formState.inputValues.email, formState.inputValues.password)
+        } else {
+             // email and password to authActions.login in store
+            action = authActions.login(formState.inputValues.email, formState.inputValues.password)
+        }
+        setError(null)
+        setIsLoading(true)
+        try {
+            await dispatch(action)
+            props.navigation.navigate('Reviews')
+        } catch (error) {
+            setError(error.message)
+            setIsLoading(false)
+        }
     }
 
     const handleInputChange = useCallback(
@@ -94,8 +124,11 @@ const AuthContainer = props => {
                         onInputChange={handleInputChange}
                         initialValue=""
                     />
-                    <Button title='Log In' onPress={handleSignup} />
-                    <Button title='Sign Up' onPress={() => {}} />
+                    {isLoading ? <ActivityIndicator size='small' /> : <Button title={isSignup ? 'Sign Up' : 'Log In'} onPress={handleAuth} />}
+                    <Button title={isSignup ? 'Switch to Log In' : 'Switch to Sign Up'} onPress={() => {
+                        // set Signup to the opposite of current state (true to false)
+                        setIsSignup(prevState => !prevState)
+                    }} />
                 </ScrollView>
             </Card>
         </View>
