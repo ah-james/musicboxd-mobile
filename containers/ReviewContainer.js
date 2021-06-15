@@ -1,14 +1,16 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, Button, Platform } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { useSelector } from 'react-redux'
 
-import REVIEWS from '../data/dummy-data'
 import CustomHeaderButton from '../components/CustomHeaderButton'
+
 
 const ReviewContainer = props => {
     const reviewId = props.navigation.getParam('id')
-    const selectedReview = REVIEWS.find(review => review.id === reviewId)
-
+    const selectedReview = useSelector(state =>
+        state.reviews.availableReviews.find(review => review.id === reviewId))
+    
     handleEditReview = (id, album) => {
         props.navigation.navigate({routeName: 'EditReview', params: {
             id: id,
