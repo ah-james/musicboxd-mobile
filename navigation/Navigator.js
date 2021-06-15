@@ -30,7 +30,7 @@ const AppNavigator = createDrawerNavigator({
     User: UserNavigator
 }, {
     contentComponent: props => {
-        const dispatch = useDispatch
+        const dispatch = useDispatch()
         return <View style={{flex: 1, padding: 20}}>
             <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}} >
                 <DrawerItems {...props} />

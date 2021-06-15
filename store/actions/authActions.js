@@ -32,7 +32,7 @@ export const signup = (email, password) => {
 
         // unpack response body, convert from json to JS
         const responseData = await response.json()
-        console.log(responseData)
+        // console.log(responseData)
         // dispatch action object
         dispatch({ type: SIGNUP, token: responseData.idToken, userId: responseData.localId })
         const expirationDate = new Date(new Date().getTime() + parseInt(responseData.expiresIn) * 1000)
@@ -69,7 +69,7 @@ export const login = (email, password) => {
 
         // unpack response body, convert from json to JS
         const responseData = await response.json()
-        console.log(responseData)
+        // console.log(responseData)
         // dispatch action object
         dispatch({ type: LOGIN, token: responseData.idToken, userId: responseData.localId })
         const expirationDate = new Date(new Date().getTime() + parseInt(responseData.expiresIn) * 1000)

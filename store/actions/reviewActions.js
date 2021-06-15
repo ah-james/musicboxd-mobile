@@ -16,8 +16,7 @@ export const fetchReviews = () => {
 
             const responseData = await response.json()
             const loadedReviews = []
-
-            for (key in responseData) {
+            for (const key in responseData) {
                 loadedReviews.push(new Review(
                     key,
                     responseData[key].userId,
@@ -33,6 +32,7 @@ export const fetchReviews = () => {
                 reviews: loadedReviews, 
                 userReviews: loadedReviews.filter(review => review.userId === userId)
             })
+            // console.log(loadedReviews)
         } catch (error) {
             throw error
         }
