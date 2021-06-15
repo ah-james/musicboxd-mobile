@@ -21,7 +21,10 @@ const ReviewCard = props => {
                         <View style={styles.artistInfo}>
                             <Text style={styles.info}>{props.album} by {props.artist}</Text>
                             <Text>{props.rating}/10</Text>
-                            <Text>By {props.user}</Text>
+                            {/* <Text>By {props.user}</Text> */}
+                        </View>
+                        <View>
+                            {props.children}
                         </View>
                     </View>
                 </TouchableComponent>
