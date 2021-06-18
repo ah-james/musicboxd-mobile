@@ -16,7 +16,7 @@ export const fetchReviews = () => {
 
             const responseData = await response.json()
             const loadedReviews = []
-            for (const key in responseData) {
+            for (key in responseData) {
                 loadedReviews.push(new Review(
                     key,
                     responseData[key].userId,

@@ -1,13 +1,16 @@
-import React, { useCallback, useState } from 'react'
-import { FlatList, Platform, StyleSheet } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { View, FlatList, Platform, StyleSheet, ActivityIndicator } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ReviewCard from '../components/ReviewCard'
 import CustomHeaderButton from '../components/CustomHeaderButton'
 import * as reviewActions from '../store/actions/reviewActions'
+import Colors from '../constants/Colors'
 
 const AlbumsOverviewContainer = props => {
+    // utilize state to determine if content is loading
+    const [isLoading, setIsLoading] = useState(true)
     const [isRefreshing, setIsRefreshing] = useState(false)
 
     const reviews = useSelector(state => state.reviews.availableReviews)
@@ -22,12 +25,33 @@ const AlbumsOverviewContainer = props => {
         }
         setIsRefreshing(false)
     }, [dispatch, setIsRefreshing])
+
+    // set side-effect
+    useEffect(() => {
+        // page is loading
+        setIsLoading(true)
+        // loadReviews runs asynchronously
+        loadReviews().then(() => {
+            // after loadReviews runs set isLoading to false
+            setIsLoading(false)
+        })
+    }, [dispatch, loadReviews])
     
     const handleSelect = (id, album) => {
         props.navigation.navigate({ routeName: 'ReviewShow', params: {
             id: id,
             album: album
         } })
+    }
+
+    // if isLoading in state is true
+    if (isLoading) {
+        return(
+            <View style={styles.centered}>
+                {/* spinny wheel */}
+                <ActivityIndicator size='large' color={Colors.primaryColor} />
+            </View>
+        )
     }
 
     return(
@@ -58,7 +82,11 @@ AlbumsOverviewContainer.navigationOptions = navData => {
 }
 
 const styles = StyleSheet.create({
-
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 })
 
 export default AlbumsOverviewContainer
