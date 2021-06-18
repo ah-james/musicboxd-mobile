@@ -30,7 +30,6 @@ const ReviewContainer = props => {
             <View style={styles.textContainer}>
                 <Text>{selectedReview.text}</Text>
             </View>
-            <Button title='Edit' accessibilityLabel="Edit Your Album Review" onPress={() => handleEditReview(selectedReview.id, selectedReview.album)} />
         </View>
     )
 }
@@ -39,7 +38,7 @@ ReviewContainer.navigationOptions = navData => {
     return {
         headerTitle: navData.navigation.getParam('album'),
         headerRight: () => <HeaderButtons headerButtonComponent={CustomHeaderButton}>
-            <Item title='User' iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'} onPress={() => {navData.navigation.navigate('User')}} />
+            <Item title='User' iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'} onPress={() => {navData.navigation.navigate('UserReviews')}} />
         </HeaderButtons>
     }
 }

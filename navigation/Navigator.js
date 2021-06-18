@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, Button, View } from 'react-native'
+import { SafeAreaView, Button, View, Platform } from 'react-native'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer'
@@ -14,15 +14,27 @@ import StartupContainer from '../containers/StartupContainer'
 import Colors from '../constants/Colors'
 import * as authActions from '../store/actions/authActions'
 
+const defaultNavOptions = {
+    headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor: ''
+    },
+    headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary
+    
+}
+
 
 const ReviewsNavigator = createStackNavigator({
     AlbumsOverview: AlbumsOverviewContainer,
     ReviewShow: ReviewContainer,
+}, {
+    defaultNavigationOptions: defaultNavOptions
 })
 
 const UserNavigator = createStackNavigator({
     UserReviews: UserContainer,
     EditReview: EditReviewContainer
+}, {
+    defaultNavigationOptions: defaultNavOptions
 })
 
 const AppNavigator = createDrawerNavigator({
@@ -46,6 +58,14 @@ const AppNavigator = createDrawerNavigator({
 
 const AuthNavigator = createStackNavigator({
     Auth: AuthContainer
+}, {
+    defaultNavigationOptions: {
+        headerStyle: {
+            backgroundColor: Platform.OS === 'android' ? Colors.secondaryColor: ''
+        },
+        headerTintColor: Platform.OS === 'android' ? 'white' : Colors.secondaryColor
+        
+    }
 })
 
 const MainNavigator = createSwitchNavigator({

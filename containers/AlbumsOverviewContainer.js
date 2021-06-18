@@ -18,10 +18,10 @@ const AlbumsOverviewContainer = props => {
         try {
             await dispatch(reviewActions.fetchReviews())
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
         setIsRefreshing(false)
-    }, [dispatch])
+    }, [dispatch, setIsRefreshing])
     
     const handleSelect = (id, album) => {
         props.navigation.navigate({ routeName: 'ReviewShow', params: {

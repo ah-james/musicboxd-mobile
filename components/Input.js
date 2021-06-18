@@ -75,7 +75,9 @@ const Input = props => {
 }
 
 const styles = StyleSheet.create({
-
+    errorText: {
+        color: 'red',
+    }
 })
 
 export default Input

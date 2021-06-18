@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import Input from '../components/Input'
 import Card from '../components/Card'
 import * as authActions from '../store/actions/authActions'
+import Colors from '../constants/Colors'
 
 const FORM_UPDATE = 'FORM_UPDATE'
 
@@ -124,11 +125,15 @@ const AuthContainer = props => {
                         onInputChange={handleInputChange}
                         initialValue=""
                     />
-                    {isLoading ? <ActivityIndicator size='small' /> : <Button title={isSignup ? 'Sign Up' : 'Log In'} onPress={handleAuth} />}
-                    <Button title={isSignup ? 'Switch to Log In' : 'Switch to Sign Up'} onPress={() => {
-                        // set Signup to the opposite of current state (true to false)
-                        setIsSignup(prevState => !prevState)
-                    }} />
+                    <View style={styles.buttonContainer}>
+                        {isLoading ? <ActivityIndicator size='small' /> : <Button title={isSignup ? 'Sign Up' : 'Log In'} color={Colors.primaryColor} onPress={handleAuth} />}
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <Button color={Colors.secondaryColor} title={isSignup ? 'Switch to Log In' : 'Switch to Sign Up'} onPress={() => {
+                            // set Signup to the opposite of current state (true to false)
+                            setIsSignup(prevState => !prevState)
+                        }} />
+                    </View>
                 </ScrollView>
             </Card>
         </View>
@@ -140,7 +145,22 @@ AuthContainer.navigationOptions = {
 }
 
 const styles = StyleSheet.create({
-
+    screen: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.primaryColor
+    },
+    authContainer: {
+        width: '80%',
+        maxWidth: 400,
+        maxHeight: 400,
+        padding: 15,
+    }, 
+    buttonContainer: {
+        marginTop: 10,
+        // padding: 10,
+    }
 })
 
 export default AuthContainer
