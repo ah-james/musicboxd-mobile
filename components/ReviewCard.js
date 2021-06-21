@@ -19,7 +19,9 @@ const ReviewCard = props => {
                             <Image style={styles.image} source={{uri: props.imageUrl}} />
                         </View>
                         <View style={styles.artistInfo}>
-                            <Text style={styles.info}>{props.album} by {props.artist}</Text>
+                            <Text style={styles.info}>{props.album}</Text>
+                            <Text>by</Text>
+                            <Text>{props.artist}</Text>
                             <Text>{props.rating}/10</Text>
                             {/* <Text>By {props.user}</Text> */}
                         </View>
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        height: '80%',
+        height: '75%',
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         overflow: 'hidden',
