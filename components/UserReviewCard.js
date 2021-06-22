@@ -26,7 +26,7 @@ const ReviewCard = props => {
                     </View> 
                 </TouchableComponent>
                 <View style={styles.buttonContainer}>
-                    <Button title="Edit" onPress={() => props.handleSelect(props.id)} />
+                    {/* <Button title="Edit" onPress={() => props.handleSelect(props.id)} /> */}
                     <Button title="Delete" onPress={() => props.handleDelete(props.id)} />
                 </View>
             </View>
