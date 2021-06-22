@@ -42,10 +42,11 @@ const EditReviewContainer = props => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState()
 
-    const id = props.navigation.getParam('id')
+    const id = props.navigation.getParam('reviewId')
     
     //useSelector extracts data from redux state
-    const editedReview = useSelector(state => console.log(state.reviews.userReviews)) // find specific review being edited
+    const editedReview = useSelector(state => 
+        state.reviews.userReviews.find(review => review.id === id)) // find specific review being edited
 
     const dispatch = useDispatch()
 
@@ -149,7 +150,7 @@ const EditReviewContainer = props => {
                         errorText="Please Enter a Valid Title" 
                         id="album" 
                         required
-                        initialValue={''}
+                        initialValue={editedReview ? editedReview.album : ''}
                         onInputChange={handleInputChange}
                         initiallyValid={!!editedReview}
                     />
@@ -161,7 +162,7 @@ const EditReviewContainer = props => {
                         label="Artist Name"
                         id='artist'
                         required
-                        initialValue={''}
+                        initialValue={editedReview ? editedReview.artist : ''}
                         onInputChange={handleInputChange}
                         initiallyValid={!!editedReview}
                     />
@@ -173,7 +174,7 @@ const EditReviewContainer = props => {
                         label="Album Art"
                         id='imageUrl'
                         required
-                        initialValue={''}
+                        initialValue={editedReview ? editedReview.imageUrl : ''}
                         onInputChange={handleInputChange}
                         initiallyValid={!!editedReview}
                     />
@@ -185,7 +186,7 @@ const EditReviewContainer = props => {
                         errorText="Please Enter a Valid Rating Between 1-10"
                         id='rating'
                         required
-                        initialValue={''}
+                        initialValue={editedReview ? editedReview.rating : ''}
                         onInputChange={handleInputChange}
                         initiallyValid={!!editedReview}
                     />
@@ -196,7 +197,7 @@ const EditReviewContainer = props => {
                         id='text'
                         label='Review Text'
                         errorText="Please Enter Your Review Text"
-                        initialValue={''}
+                        initialValue={editedReview ? editedReview.text : ''}
                         onInputChange={handleInputChange}
                         initiallyValid={!!editedReview}
                     />

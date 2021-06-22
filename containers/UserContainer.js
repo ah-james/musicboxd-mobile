@@ -1,13 +1,16 @@
-import React, { useCallback, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, Button, Alert } from 'react-native'
+import React, { useCallback, useState, useEffect } from 'react'
+import { View, Text, StyleSheet, FlatList, Button, Alert, ActivityIndicator, ScrollView } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { useSelector, useDispatch } from 'react-redux'
 
 import CustomHeaderButton from '../components/CustomHeaderButton'
-import ReviewCard from '../components/ReviewCard'
+import UserReviewCard from '../components/UserReviewCard'
 import * as reviewActions from '../store/actions/reviewActions'
+import Colors from '../constants/Colors'
+
 
 const UserContainer = props => {
+    const [isLoading, setIsLoading] = useState(false)
     const [isRefreshing, setIsRefreshing] = useState(false)
 
     const userReviews = useSelector(state => state.reviews.userReviews)
@@ -23,6 +26,13 @@ const UserContainer = props => {
         setIsRefreshing(false)
     }, [dispatch, setIsRefreshing])
 
+    useEffect(() => {
+        setIsLoading(true)
+        loadReviews().then(() => {
+            setIsLoading(false)
+        })
+    }, [dispatch, loadReviews])
+
     const handleEditReview = id => {
         props.navigation.navigate({routeName: 'EditReview', params: {
             reviewId: id,
@@ -36,23 +46,40 @@ const UserContainer = props => {
         ])
     }
 
-    return <FlatList onRefresh={loadReviews} refreshing={isRefreshing} data={userReviews} renderItem={itemData => (
-        <ReviewCard 
-            id={itemData.item.id}
-            imageUrl={itemData.item.imageUrl}
-            album={itemData.item.album}
-            artist={itemData.item.artist}
-            rating={itemData.item.rating}
-            user={itemData.item.userId}
-            onSelect={() => handleEditReview(itemData.item.id)}
-        />
+    if (isLoading) {
+        return(
+            <View style={styles.centered}>
+                <ActivityIndicator size='large' color={Colors.primaryColor} />
+            </View>
+        )
+    }
+    
+    // same userReviews flow as in Overview
+    if (userReviews.length === 0) {
+        return(
+            <View style={styles.centered}>
+                <Text>No Reviews Found</Text>
+            </View>
+        )
+    }
 
-    )}/>
+    return( 
+        <FlatList onRefresh={loadReviews} refreshing={isRefreshing} data={userReviews} renderItem={itemData => (
+            <UserReviewCard 
+                id={itemData.item.id}
+                imageUrl={itemData.item.imageUrl}
+                album={itemData.item.album}
+                artist={itemData.item.artist}
+                rating={itemData.item.rating}
+                user={itemData.item.userId}
+                handleSelect={() => handleEditReview(itemData.item.id)}
+                handleDelete={() => handleDelete(itemData.item.id)}
+            />  
+        )}/>
+    )
 }
 
-            {/* <Button title="Edit" onPress={() => handleEditReview(itemData.item.id)} />
-            <Button title="Delete" onPress={() => handleDelete(itemData.item.id)} />
-        </ReviewCard>  */}
+
 
 UserContainer.navigationOptions = navData => {
     return {
@@ -68,7 +95,11 @@ UserContainer.navigationOptions = navData => {
 
 
 const styles = StyleSheet.create({
-
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 })
 
 export default UserContainer
