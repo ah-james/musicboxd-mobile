@@ -42,7 +42,7 @@ export const fetchReviews = () => {
 export const deleteReview = reviewId => {
     return async (dispatch, getState) => {
         const token = getState().auth.token
-        const response = await fetch(`https://musicboxd-mobile-default-rtdb.firebaseio.com/reviews${reviewId}.json?auth=${token}`, {
+        const response = await fetch(`https://musicboxd-mobile-default-rtdb.firebaseio.com/reviews/${reviewId}.json?auth=${token}`, {
             method: 'DELETE',
         })
 
@@ -96,7 +96,7 @@ export const updateReview = (id, album, artist, imageUrl, rating, text) => {
     return async (dispatch, getState) => {
         // use getState to acquire token from redux store
         const token = getState().auth.token
-        const response = await fetch(`https://musicboxd-mobile-default-rtdb.firebaseio.com/products${id}.json?auth=${token}`, {
+        const response = await fetch(`https://musicboxd-mobile-default-rtdb.firebaseio.com/reviews/${id}.json?auth=${token}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
