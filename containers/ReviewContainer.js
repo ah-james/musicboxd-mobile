@@ -20,16 +20,10 @@ const ReviewContainer = props => {
 
     return(
         <View>
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{uri: selectedReview.imageUrl}} />
-            </View>
-            <View style={styles.albumInfo}>
-                <Text>{selectedReview.album} by {selectedReview.artist}</Text>
-                <Text>{selectedReview.rating}/10</Text>
-            </View>
-            <View style={styles.textContainer}>
-                <Text>{selectedReview.text}</Text>
-            </View>
+            <Image style={styles.image} source={{uri: selectedReview.imageUrl}} />
+            <Text style={styles.albumTitle}>{selectedReview.album} by {selectedReview.artist}</Text>
+            <Text style={styles.rating}>{selectedReview.rating}/10</Text>            
+            <Text style={styles.review}>{selectedReview.text}</Text>
         </View>
     )
 }
@@ -44,18 +38,11 @@ ReviewContainer.navigationOptions = navData => {
 }
 
 const styles = StyleSheet.create({
-    imageContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '50%',
-        width: '50%',
-        margin: 10,
-    },
     image: {
         height: '100%',
         width: '100%',
-        margin: 10
-    }
+    },
+    albumTitle: {},
 })
 
 export default ReviewContainer

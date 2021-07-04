@@ -32,7 +32,6 @@ export const fetchReviews = () => {
                 reviews: loadedReviews, 
                 userReviews: loadedReviews.filter(review => review.userId === userId)
             })
-            // console.log(loadedReviews)
         } catch (error) {
             throw error
         }
