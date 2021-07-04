@@ -42,7 +42,23 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
     },
-    albumTitle: {},
+    albumTitle: {
+        fontSize: 20,
+        color: '#888',
+        textAlign: 'center',
+        marginVertical: 20,
+    },
+    rating: {
+        fontSize: 20,
+        color: '#888',
+        textAlign: 'center',
+        marginVertical: 20,
+    },
+    review: {
+        fontSize: 14,
+        textAlign: 'center',
+        marginHorizontal: 20,
+    },
 })
 
 export default ReviewContainer
